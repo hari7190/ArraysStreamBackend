@@ -9,16 +9,39 @@ public class Post {
     private String title;
     private String author;
     private String images;
+    private String date;
+    private boolean isReady;
 
-    public Post(int id, String content, String title, String author, String images) {
+    public Post(int id, String content, String title, String author, String images, String date, boolean isReady) {
+        this(content, title, author, images, date, isReady);
         this.id = id;
+    }
+
+    public Post(String content, String title, String author, String images, String date, boolean isReady) {
         this.content = content;
         this.title = title;
         this.author = author;
         this.images = images;
+        this.date = date;
+        this.isReady = isReady;
     }
 
-    public Post() {
+    public Post() {}
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public boolean isReady() {
+        return isReady;
+    }
+
+    public void setReady(boolean ready) {
+        isReady = ready;
     }
 
     public int getId() {
@@ -69,6 +92,8 @@ public class Post {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", images='" + images + '\'' +
+                ", date='" + date + '\'' +
+                ", isReady=" + isReady +
                 '}';
     }
 }
