@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "219b5c73-4b61-429f-b0c9-645630a354e9",
+		"name": "Arrays.Stream",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fetch Posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec4b92dd-3a81-4708-9de4-66df9556435f",
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check if I am getting a list\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"countOfPosts\", jsonData.length)\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ASTREAM {{authCode}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{domain}}/posts",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch A Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec4b92dd-3a81-4708-9de4-66df9556435f",
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check if you are getting an object & retry\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"object\");\r",
+							"\r",
+							"    if(Object.keys(jsonData).length > 0 && jsonData.constructor === Object){\r",
+							"        if (jsonData.id > 1){\r",
+							"            pm.collectionVariables.set(\"idToRequest\", pm.collectionVariables.get(\"idToRequest\")-1);\r",
+							"            postman.setNextRequest(\"Fetch A Post\");\r",
+							"        } else {\r",
+							"            pm.collectionVariables.unset(\"idToRequest\");\r",
+							"        }\r",
+							"    } else {\r",
+							"            pm.collectionVariables.unset(\"idToRequest\");\r",
+							"        }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b6a9c911-5e42-4ca5-a6e3-8089437c070d",
+						"exec": [
+							"if(!pm.collectionVariables.has(\"idToRequest\")){\r",
+							"    pm.collectionVariables.set(\"idToRequest\", pm.collectionVariables.get(\"countOfPosts\") -1);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ASTREAM {{authCode}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{domain}}/posts/{{idToRequest}}",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"posts",
+						"{{idToRequest}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "68a3bbe5-a01d-4855-a154-562d5ce44a9e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6d6a3cc3-1019-4067-886c-5e974662be9e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "69fd36a6-336d-4201-8ef6-1e17e99e913a",
+			"key": "authCode",
+			"value": ""
+		},
+		{
+			"id": "3b4dbdc0-1df3-413d-b75c-373b93f10fc3",
+			"key": "countOfPosts",
+			"value": 6
+		}
+	],
+	"protocolProfileBehavior": {}
+}
