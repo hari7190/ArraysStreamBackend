@@ -1,5 +1,6 @@
 package stream.arrays.backend.controllers;
 
+import com.mongodb.internal.operation.OrderBy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import stream.arrays.backend.domain.Post;
@@ -25,7 +26,8 @@ public class PostAPIControllers {
     @PostMapping
     public void createPost(@RequestBody Post payload){
         //An existing Id indicates a record in db, so we reuse it to update db record
-        int newId = (payload.getId() > 0) ? payload.getId() : (int) postRepository.count() +1;
+        Post postTop = postRepository.findTopByOrderByIdDesc();
+        int newId = (payload.getId() > 0) ? payload.getId() : (int) postTop.getId() +1;
         postRepository.save(new Post(
                 newId
                 ,payload.getContent()

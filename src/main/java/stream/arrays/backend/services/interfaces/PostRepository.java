@@ -11,4 +11,5 @@ public interface PostRepository extends MongoRepository<Post, String> {
     public List<Post> findByAuthor(String author);
     public Post findById(int id);
     public void deleteById(int id);
+    public Post findTopByOrderByIdDesc();
 }
