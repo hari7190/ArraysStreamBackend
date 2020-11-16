@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.0.3.RELEASE'
+    id "org.sonarqube" version "2.7"
 
 }
 group 'stream.arrays.backend'
@@ -24,6 +25,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
     compile group:  'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.3.4.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.4.RELEASE'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

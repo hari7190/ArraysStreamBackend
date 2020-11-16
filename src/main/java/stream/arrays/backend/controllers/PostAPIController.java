@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
-public class PostAPIControllers {
+public class PostAPIController {
     @Autowired
     PostRepository postRepository;
 
