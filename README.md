@@ -7,3 +7,14 @@ Provides:
 3. Edit a post
 4. Delete a post
 5. Replace SimpleStupidBlog engine.
+
+
+Stack:
+
+    Java 8+
+    Spring 
+        Security
+        Web
+        JPA
+    Mongodb
+    
