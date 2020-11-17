@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import stream.arrays.backend.domain.Post;
 import stream.arrays.backend.services.interfaces.PostRepository;
+
 import java.util.List;
 
 @RestController

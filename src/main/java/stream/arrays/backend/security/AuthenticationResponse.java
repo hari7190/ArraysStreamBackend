@@ -1,7 +1,5 @@
 package stream.arrays.backend.security;
 
-import org.springframework.stereotype.Component;
-
 public class AuthenticationResponse {
     private String jwt;
 
