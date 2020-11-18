@@ -3,6 +3,7 @@ package stream.arrays.backend.security.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,8 @@ import java.util.function.Function;
 
 @Service
 public class JwtTokenUtil {
-
-    private String SECRET_KEY = "C463EF8C148328F7635295D23DCECC463EF8C148328F7635295D23DCEC"; // ToDO: Replace with Properties
+    @Value( "${jwt.secret}" )
+    private String SECRET_KEY; // ToDO: Replace with Properties
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
