@@ -1,6 +1,7 @@
 package stream.arrays.backend.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +18,6 @@ import java.io.IOException;
 
 @Component
 public class HeaderCheckFilter extends OncePerRequestFilter {
-    private String SECRET_KEY = "C463EF8C148328F7635295D23DCECC463EF8C148328F7635295D23DCEC";
-
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
@@ -30,12 +29,11 @@ public class HeaderCheckFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
         if (SecurityContextHolder.getContext().getAuthentication() == null && authHeader != null && authHeader.startsWith("ASTREAM ")){
             String jwts = authHeader.split(" ")[1];
-            System.out.println(jwts);
             String username = jwtTokenUtil.extractUsername(jwts);
             UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
 
             if(jwtTokenUtil.validateToken(jwts, userDetails)) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword());
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
