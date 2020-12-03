@@ -15,6 +15,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ListIterator;
 
 @Component
 public class HeaderCheckFilter extends OncePerRequestFilter {
@@ -37,6 +41,11 @@ public class HeaderCheckFilter extends OncePerRequestFilter {
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
+
+            List<Integer> test = new ArrayList<>();
+            ArrayList<Integer> test1  = new ArrayList<>();
+            ListIterator<Integer> test3 = test.listIterator();
+            
         }
         filterChain.doFilter(request, response);
     }
